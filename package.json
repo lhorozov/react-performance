@@ -51,7 +51,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "build:profile": "react-scripts build --profile",
-    "serve": "serve -s build",
+    "serve": "serve -s -p 8000 build",
     "test": "react-scripts test",
     "test:coverage": "npm run test -- --watchAll=false --coverage",
     "test:exercises": "npm run test -- testing.*exercises\\/ --onlyChanged",
