@@ -60,8 +60,10 @@ function App() {
   const forceRerender = useForceRerender()
   const [inputValue, setInputValue] = React.useState('')
 
-  // 🐨 wrap getItems in a call to `React.useMemo`
-  const allItems = getItems(inputValue)
+  const namedFF = () => getItems(inputValue)
+
+  const allItems = React.useMemo(namedFF, [inputValue])
+  // const allItems = getItems(inputValue)
   const items = allItems.slice(0, 100)
 
   const {
