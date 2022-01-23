@@ -30,7 +30,7 @@ function Menu({
     </ul>
   )
 }
-Menu = React.memo(Menu)
+// Menu = React.memo(Menu)
 
 function ListItem({
   getItemProps,

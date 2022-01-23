@@ -15,22 +15,26 @@ function Menu({
 }) {
   return (
     <ul {...getMenuProps()}>
-      {items.map((item, index) => (
-        <ListItem
-          key={item.id}
-          getItemProps={getItemProps}
-          item={item}
-          index={index}
-          selectedItem={selectedItem}
-          highlightedIndex={highlightedIndex}
-        >
-          {item.name}
-        </ListItem>
-      ))}
+      {items.map((item, index) => {
+        console.log(item)
+        return (
+          <ListItem
+            key={item.id}
+            getItemProps={getItemProps}
+            item={item}
+            index={index}
+            selectedItem={selectedItem}
+            highlightedIndex={highlightedIndex}
+          >
+            {item.name}
+          </ListItem>
+        )
+      })}
     </ul>
   )
 }
-// 🐨 Memoize the Menu here using React.memo
+// eslint-disable-next-line no-func-assign
+Menu = React.memo(Menu)
 
 function ListItem({
   getItemProps,
@@ -56,7 +60,8 @@ function ListItem({
     />
   )
 }
-// 🐨 Memoize the ListItem here using React.memo
+// eslint-disable-next-line no-func-assign
+ListItem = React.memo(ListItem)
 
 function App() {
   const forceRerender = useForceRerender()
@@ -114,8 +119,3 @@ function App() {
 }
 
 export default App
-
-/*
-eslint
-  no-func-assign: 0,
-*/
