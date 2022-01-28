@@ -16,7 +16,6 @@ function Menu({
   return (
     <ul {...getMenuProps()}>
       {items.map((item, index) => {
-        console.log(item)
         return (
           <ListItem
             key={item.id}
@@ -35,6 +34,32 @@ function Menu({
 }
 // eslint-disable-next-line no-func-assign
 Menu = React.memo(Menu)
+
+function shouldSkipRender(prev, next) {
+  if (prev.getItemProps !== next.getItemProps) {
+    return false
+  }
+  if (prev.item !== next.item) {
+    return false
+  }
+  if (prev.index !== next.index) {
+    return false
+  }
+  if (prev?.selectedItem?.id !== next?.selectedItem?.id) {
+    const wasSelected = prev?.selectedItem?.id === prev?.item?.id
+    const shouldBeSelected = next?.selectedItem?.id === next?.item?.id
+    return wasSelected === shouldBeSelected
+  }
+
+  if (prev.highlightedIndex !== next.highlightedIndex) {
+    const wasItHighlighted = prev.highlightedIndex === prev.index
+    const shouldBeHighlighted = next.highlightedIndex === next.index
+
+    return wasItHighlighted === shouldBeHighlighted
+  }
+
+  return true
+}
 
 function ListItem({
   getItemProps,
@@ -61,7 +86,7 @@ function ListItem({
   )
 }
 // eslint-disable-next-line no-func-assign
-ListItem = React.memo(ListItem)
+ListItem = React.memo(ListItem, shouldSkipRender)
 
 function App() {
   const forceRerender = useForceRerender()
