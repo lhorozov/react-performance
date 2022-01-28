@@ -16,14 +16,16 @@ function Menu({
   return (
     <ul {...getMenuProps()}>
       {items.map((item, index) => {
+        const isSelected = selectedItem?.id === item.id
+        const isHighlighted = highlightedIndex === index
         return (
           <ListItem
             key={item.id}
             getItemProps={getItemProps}
+            isSelected={isSelected}
+            isHighlighted={isHighlighted}
             item={item}
             index={index}
-            selectedItem={selectedItem}
-            highlightedIndex={highlightedIndex}
           >
             {item.name}
           </ListItem>
@@ -35,42 +37,14 @@ function Menu({
 // eslint-disable-next-line no-func-assign
 Menu = React.memo(Menu)
 
-function shouldSkipRender(prev, next) {
-  if (prev.getItemProps !== next.getItemProps) {
-    return false
-  }
-  if (prev.item !== next.item) {
-    return false
-  }
-  if (prev.index !== next.index) {
-    return false
-  }
-  if (prev?.selectedItem?.id !== next?.selectedItem?.id) {
-    const wasSelected = prev?.selectedItem?.id === prev?.item?.id
-    const shouldBeSelected = next?.selectedItem?.id === next?.item?.id
-    return wasSelected === shouldBeSelected
-  }
-
-  if (prev.highlightedIndex !== next.highlightedIndex) {
-    const wasItHighlighted = prev.highlightedIndex === prev.index
-    const shouldBeHighlighted = next.highlightedIndex === next.index
-
-    return wasItHighlighted === shouldBeHighlighted
-  }
-
-  return true
-}
-
 function ListItem({
   getItemProps,
   item,
   index,
-  selectedItem,
-  highlightedIndex,
+  isSelected,
+  isHighlighted,
   ...props
 }) {
-  const isSelected = selectedItem?.id === item.id
-  const isHighlighted = highlightedIndex === index
   return (
     <li
       {...getItemProps({
@@ -86,7 +60,7 @@ function ListItem({
   )
 }
 // eslint-disable-next-line no-func-assign
-ListItem = React.memo(ListItem, shouldSkipRender)
+ListItem = React.memo(ListItem)
 
 function App() {
   const forceRerender = useForceRerender()
