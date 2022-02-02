@@ -86,11 +86,19 @@ function Grid() {
     />
   )
 }
+// eslint-disable-next-line no-func-assign
 Grid = React.memo(Grid)
 
 function Cell({row, column}) {
   const state = useAppState()
   const cell = state.grid[row][column]
+
+  return <CellImpl row={row} column={column} cell={cell}></CellImpl>
+}
+
+Cell = React.memo(Cell)
+
+function CellImpl({row, column, cell}) {
   const dispatch = useAppDispatch()
   const handleClick = () => dispatch({type: 'UPDATE_GRID_CELL', row, column})
   return (
@@ -106,7 +114,8 @@ function Cell({row, column}) {
     </button>
   )
 }
-Cell = React.memo(Cell)
+// eslint-disable-next-line no-func-assign
+CellImpl = React.memo(CellImpl)
 
 function DogNameInput() {
   const [dogName, setDogName] = React.useContext(DogNameContext)
